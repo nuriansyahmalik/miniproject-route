@@ -42,7 +42,7 @@ func (h *MenuHandler) ResolveMenuByID(w http.ResponseWriter, r *http.Request) {
 		response.WithError(w, err)
 		return
 	}
-	w.Header().Add("ID %s", menu.ID)
+	w.Header().Set("ID", menu.ID)
 	response.WithJSON(w, http.StatusOK, menu)
 }
 
