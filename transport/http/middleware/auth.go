@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"github.com/spf13/viper"
 	"net/http"
 
 	"github.com/evermos/boilerplate-go/infras"
@@ -86,6 +87,19 @@ func (a *Authentication) Password(next http.Handler) http.Handler {
 			return
 		}
 
+		next.ServeHTTP(w, r)
+	})
+}
+func (a *Authentication) AuthMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		apiKey := r.Header.Get("X-Api-Key")
+
+		validAPIKey := viper.GetString("API_KEY")
+
+		if apiKey != validAPIKey {
+			http.Error(w, "API key tidak valid", http.StatusUnauthorized)
+			return
+		}
 		next.ServeHTTP(w, r)
 	})
 }

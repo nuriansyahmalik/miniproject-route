@@ -101,6 +101,7 @@ type Config struct {
 			GracePeriodSeconds   int64 `mapstructure:"GRACE_PERIOD_SECONDS"`
 		}
 	}
+	APIKey string `mapstructure:"API_KEY"`
 }
 
 var (
